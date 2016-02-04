@@ -20,6 +20,7 @@ package com.android.systemui.sospos
 import com.android.systemui.qs.tileimpl.QSTileImpl
 import com.android.systemui.qs.tiles.AODTile
 import com.android.systemui.qs.tiles.AmbientDisplayTile
+import com.android.systemui.qs.tiles.CaffeineTile
 import com.android.systemui.qs.tiles.HeadsUpTile
 import com.android.systemui.qs.tiles.SoundTile
 import com.android.systemui.qs.tiles.UsbTetherTile
@@ -30,6 +31,12 @@ import dagger.multibindings.StringKey
 
 @Module
 interface SospOSModule {
+
+    /** Inject CaffeineTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(CaffeineTile.TILE_SPEC)
+    fun bindCaffeineTile(caffeineTile: CaffeineTile): QSTileImpl<*>
 
     /** Inject SoundTile into tileMap in QSModule */
     @Binds
