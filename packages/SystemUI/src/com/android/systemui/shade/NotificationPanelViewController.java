@@ -71,6 +71,7 @@ import android.util.Log;
 import android.util.MathUtils;
 import android.view.HapticFeedbackConstants;
 import android.view.InputDevice;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -236,6 +237,8 @@ import dalvik.annotation.optimization.NeverCompile;
 
 import kotlin.Unit;
 
+import com.android.internal.util.sospos.SospOSUtils;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -399,6 +402,9 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     private TrackingStartedListener mTrackingStartedListener;
     private OpenCloseListener mOpenCloseListener;
     private GestureRecorder mGestureRecorder;
+
+    private GestureDetector mLockscreenDoubleTapToSleep;
+    private boolean mIsLockscreenDoubleTapEnabled;
 
     private boolean mKeyguardQsUserSwitchEnabled;
     private boolean mKeyguardUserSwitcherEnabled;
@@ -965,6 +971,15 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
 
         updateUserSwitcherFlags();
         mKeyguardBottomAreaViewModel = keyguardBottomAreaViewModel;
+        mLockscreenDoubleTapToSleep = new GestureDetector(context,
+                new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                SospOSUtils.switchScreenOff(context);
+                return true;
+            }
+        });
+
         mKeyguardBottomAreaInteractor = keyguardBottomAreaInteractor;
         mKeyguardClockInteractor = keyguardClockInteractor;
         KeyguardLongPressViewBinder.bind(
@@ -3200,6 +3215,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         }
     }
 
+    @Override
     public void dozeTimeTick() {
         mLockIconViewController.dozeTimeTick();
         if (!KeyguardShadeMigrationNssl.isEnabled()) {
@@ -3208,6 +3224,10 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         if (mInterpolatedDarkAmount > 0) {
             positionClockAndNotifications();
         }
+    }
+
+    public void setLockscreenDoubleTapToSleep(boolean isDoubleTapEnabled) {
+        mIsLockscreenDoubleTapEnabled = isDoubleTapEnabled
     }
 
     void setStatusAccessibilityImportance(int mode) {
@@ -4972,6 +4992,12 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             if (mLastEventSynthesizedDown && event.getAction() == MotionEvent.ACTION_UP) {
                 expand(true /* animate */);
             }
+
+            if (mIsLockscreenDoubleTapEnabled && !mPulsing && !mDozing
+                    && mStatusBarState == StatusBarState.KEYGUARD) {
+                mLockscreenDoubleTapToSleep.onTouchEvent(event);
+            }
+
             initDownStates(event);
 
             // If pulse is expanding already, let's give it the touch. There are situations
