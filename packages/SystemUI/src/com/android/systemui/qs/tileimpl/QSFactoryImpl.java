@@ -30,6 +30,7 @@ import com.android.systemui.qs.tiles.AirplaneModeTile;
 import com.android.systemui.qs.tiles.BatterySaverTile;
 import com.android.systemui.qs.tiles.BluetoothTile;
 import com.android.systemui.qs.tiles.CastTile;
+import com.android.systemui.qs.tiles.CaffeineTile;
 import com.android.systemui.qs.tiles.CellularTile;
 import com.android.systemui.qs.tiles.ColorInversionTile;
 import com.android.systemui.qs.tiles.DataSaverTile;
@@ -41,6 +42,7 @@ import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
+import com.android.systemui.qs.tiles.ScreenshotTile;
 import com.android.systemui.qs.tiles.SoundTile;
 import com.android.systemui.qs.tiles.UiModeNightTile;
 import com.android.systemui.qs.tiles.UsbTetherTile;
@@ -77,8 +79,11 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<NfcTile> mNfcTileProvider;
     private final Provider<GarbageMonitor.MemoryTile> mMemoryTileProvider;
     private final Provider<UiModeNightTile> mUiModeNightTileProvider;
+    private final Provider<CaffeineTile> mCaffeineTileProvider;
+    private final Provider<ScreenshotTile> mScreenshotTileProvider;
     private final Provider<SoundTile> mSoundTileProvider;
     private final Provider<UsbTetherTile> mUsbTetherTileProvider;
+
 
     private QSTileHost mHost;
 
@@ -102,6 +107,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<NfcTile> nfcTileProvider,
             Provider<GarbageMonitor.MemoryTile> memoryTileProvider,
             Provider<UiModeNightTile> uiModeNightTileProvider,
+            Provider<CaffeineTile> caffeineTileProvider,
+            Provider<ScreenshotTile> screenshotTileProvider,
             Provider<SoundTile> soundTileProvider,
             Provider<UsbTetherTile> usbTetherTileProvider) {
         mWifiTileProvider = wifiTileProvider;
@@ -123,6 +130,8 @@ public class QSFactoryImpl implements QSFactory {
         mNfcTileProvider = nfcTileProvider;
         mMemoryTileProvider = memoryTileProvider;
         mUiModeNightTileProvider = uiModeNightTileProvider;
+        mCaffeineTileProvider = caffeineTileProvider;
+        mScreenshotTileProvider = screenshotTileProvider;
         mSoundTileProvider = soundTileProvider;
         mUsbTetherTileProvider = usbTetherTileProvider;
     }
@@ -178,6 +187,10 @@ public class QSFactoryImpl implements QSFactory {
                 return mNfcTileProvider.get();
             case "dark":
                 return mUiModeNightTileProvider.get();
+            case "caffeine":
+                return mCaffeineTileProvider.get();
+            case "screenshot":
+                return mScreenshotTileProvider.get();
             case "sound":
                 return mSoundTileProvider.get();
             case "usb_tether":
