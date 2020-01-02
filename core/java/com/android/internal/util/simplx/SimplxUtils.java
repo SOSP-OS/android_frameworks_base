@@ -18,10 +18,12 @@ package com.android.internal.util.simplx;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
+import android.util.DisplayMetrics;
 import android.view.IWindowManager;
 import android.view.WindowManagerGlobal;
 
@@ -47,5 +49,23 @@ public class SimplxUtils {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
+    // Check if device has a notch
+    public static boolean hasNotch(Context context) {
+        int result = 0;
+        int resid;
+        int resourceId = context.getResources().getIdentifier(
+                "status_bar_height", "dimen", "android");
+        resid = context.getResources().getIdentifier("config_fillMainBuiltInDisplayCutout",
+                "bool", "android");
+        if (resid > 0) {
+            return context.getResources().getBoolean(resid);
+        }
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+        float px = 24 * (metrics.densityDpi / 160f);
+        return result > Math.round(px);
     }
 }
