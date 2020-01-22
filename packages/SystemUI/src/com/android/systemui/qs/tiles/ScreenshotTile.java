@@ -21,7 +21,7 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
 
-import com.android.internal.util.simplx.SimplxUtils;
+import com.android.internal.util.sosp.SospUtils;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
@@ -42,7 +42,7 @@ public class ScreenshotTile extends QSTileImpl<BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.SIMPLX_SETTINGS;
+        return MetricsEvent.SOSP_SETTINGS;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class ScreenshotTile extends QSTileImpl<BooleanState> {
         try {
              Thread.sleep(1000); //1s
         } catch (InterruptedException ie) {}
-        SimplxUtils.takeScreenshot(mRegion ? false : true);
+        SospUtils.takeScreenshot(mRegion ? false : true);
     }
 
     @Override

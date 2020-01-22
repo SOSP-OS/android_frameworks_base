@@ -722,8 +722,8 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         createAndAddWindows(result);
 
-        mSimplxSettingsObserver.observe();
-        mSimplxSettingsObserver.update();
+        mSospSettingsObserver.observe();
+        mSospSettingsObserver.update();
 
         // Make sure we always have the most current wallpaper info.
         IntentFilter wallpaperChangedFilter = new IntentFilter(Intent.ACTION_WALLPAPER_CHANGED);
@@ -3751,9 +3751,9 @@ public class StatusBar extends SystemUI implements DemoMode,
     };
 
 
-    private SimplxSettingsObserver mSimplxSettingsObserver = new SimplxSettingsObserver(mHandler);
-    private class SimplxSettingsObserver extends ContentObserver {
-        SimplxSettingsObserver(Handler handler) {
+    private SospSettingsObserver mSospSettingsObserver = new SospSettingsObserver(mHandler);
+    private class SospSettingsObserver extends ContentObserver {
+        SospSettingsObserver(Handler handler) {
             super(handler);
         }
          void observe() {

@@ -4478,7 +4478,7 @@ public final class Settings {
 
 
         /**
-         * Simplex Settings
+         * Sosp-OS Additions
          * @hide
          */
 

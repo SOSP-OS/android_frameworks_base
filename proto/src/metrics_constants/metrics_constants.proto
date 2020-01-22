@@ -7430,7 +7430,7 @@ message MetricsEvent {
     // Add new aosp constants above this line.
     // END OF AOSP CONSTANTS
 
-    // Simplx proto constant
-    SIMPLX_SETTINGS = 2000;
+    // Sosp proto constant
+    SOSP_SETTINGS = 2000;
   }
 }

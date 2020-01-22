@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The Simplx AOSP Project
+ * Copyright (C) 2020 SOSP-OS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.internal.util.simplx;
+package com.android.internal.util.sosp;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,9 +28,9 @@ import android.view.IWindowManager;
 import android.view.WindowManagerGlobal;
 
 /**
- * Add Simplx utilities
+ * Add SOSP utilities
  */
-public class SimplxUtils {
+public class SospUtils {
 
     public static final String INTENT_SCREENSHOT = "action_handler_screenshot";
     public static final String INTENT_REGION_SCREENSHOT = "action_handler_region_screenshot";
