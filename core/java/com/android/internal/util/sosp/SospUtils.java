@@ -18,6 +18,9 @@ package com.android.internal.util.sosp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException
 import android.content.res.Resources;
 import android.os.PowerManager;
 import android.os.RemoteException;
@@ -41,7 +44,8 @@ public class SospUtils {
             pm.goToSleep(SystemClock.uptimeMillis());
         }
     }
-
+    
+    //Screenshot
     public static void takeScreenshot(boolean full) {
         IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
         try {
@@ -50,6 +54,25 @@ public class SospUtils {
             e.printStackTrace();
         }
     }
+
+    // Check if the package is installed
+    public static boolean isPackageInstalled(Context context, String pkg, boolean ignoreState) {
+        if (pkg != null) {
+            try {
+                PackageInfo pi = context.getPackageManager().getPackageInfo(pkg, 0);
+                if (!pi.applicationInfo.enabled && !ignoreState) {
+                    return false;
+                }
+            } catch (NameNotFoundException e) {
+                return false;
+            }
+        }
+         return true;
+    }
+     public static boolean isPackageInstalled(Context context, String pkg) {
+        return isPackageInstalled(context, pkg, true);
+    }
+
     // Check if device has a notch
     public static boolean hasNotch(Context context) {
         int result = 0;
