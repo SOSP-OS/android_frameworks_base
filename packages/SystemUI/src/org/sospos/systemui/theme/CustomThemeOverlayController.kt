@@ -26,6 +26,7 @@ import android.net.Uri
 import android.os.Handler
 import android.os.UserHandle
 import android.os.UserManager
+ import android.util.Log
 import android.provider.Settings
 import android.provider.Settings.Secure.MONET_ENGINE_COLOR_OVERRIDE
 import android.provider.Settings.Secure.MONET_ENGINE_CHROMA_FACTOR
@@ -217,6 +218,7 @@ class CustomThemeOverlayController @Inject constructor(
 
                 listEntry.value.forEach { (shade, color) ->
                     val colorSrgb = color.convert<Srgb>()
+                    Log.d(TAG, "Color $group $shade = ${colorSrgb.toHex()}")
                     setColor("system_${group}_$shade", colorSrgb)
                 }
             }
