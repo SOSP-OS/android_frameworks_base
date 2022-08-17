@@ -23,4 +23,7 @@
 
     <!-- Global Actions pref list -->
     <java-symbol type="array" name="custom_config_globalActionsList" />
+    
+    <!-- Whether to cancel fingerprint operation if not idle -->
+    <java-symbol type="bool" name="config_fpCancelIfNotIdle" />
 </resources>
