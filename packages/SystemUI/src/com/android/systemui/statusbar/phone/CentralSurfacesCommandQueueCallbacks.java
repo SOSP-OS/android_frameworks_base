@@ -69,6 +69,7 @@ import com.android.systemui.statusbar.disableflags.DisableFlagsLogger;
 import com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayoutController;
 import com.android.systemui.statusbar.phone.dagger.CentralSurfacesComponent;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
+import com.android.systemui.statusbar.policy.FlashlightController;
 import com.android.systemui.statusbar.policy.HeadsUpManager;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.statusbar.policy.RemoteInputQuickSettingsDisabler;
@@ -105,6 +106,7 @@ public class CentralSurfacesCommandQueueCallbacks implements CommandQueue.Callba
     private final DisableFlagsLogger mDisableFlagsLogger;
     private final int mDisplayId;
     private final UserTracker mUserTracker;
+    private final FlashlightController mFlashlightController;
     private final boolean mVibrateOnOpening;
     private final VibrationEffect mCameraLaunchGestureVibrationEffect;
     private final SystemBarAttributesListener mSystemBarAttributesListener;
@@ -148,6 +150,7 @@ public class CentralSurfacesCommandQueueCallbacks implements CommandQueue.Callba
             @DisplayId int displayId,
             SystemBarAttributesListener systemBarAttributesListener,
             Lazy<CameraLauncher> cameraLauncherLazy,
+            FlashlightController flashlightController,
             UserTracker userTracker,
             QSHost qsHost,
             ActivityStarter activityStarter,
@@ -176,6 +179,7 @@ public class CentralSurfacesCommandQueueCallbacks implements CommandQueue.Callba
         mDisableFlagsLogger = disableFlagsLogger;
         mDisplayId = displayId;
         mCameraLauncherLazy = cameraLauncherLazy;
+        mFlashlightController = flashlightController;
         mUserTracker = userTracker;
         mQSHost = qsHost;
         mFeatureFlags = featureFlags;
@@ -550,6 +554,16 @@ public class CentralSurfacesCommandQueueCallbacks implements CommandQueue.Callba
             mShadeController.animateCollapseShade();
         } else {
             mShadeController.animateExpandShade();
+        }
+    }
+
+    @Override
+    public void toggleCameraFlash() {
+        if (CentralSurfaces.DEBUG) {
+            Log.d(CentralSurfaces.TAG, "Toggling camera flashlight");
+        }
+        if (mFlashlightController.isAvailable()) {
+            mFlashlightController.setFlashlight(!mFlashlightController.isEnabled());
         }
     }
 
