@@ -876,6 +876,10 @@ public class ApplicationPackageManager extends PackageManager {
             "com.google.android.feature.GOOGLE_EXPERIENCE"
     };
 
+    private static final String[] featuresAndroid = {
+            "android.software.freeform_window_management"
+    };
+
     @Override
     public boolean hasSystemFeature(String name, int version) {
         if (name != null && Arrays.asList(featuresTensor).contains(name) &&
@@ -891,6 +895,7 @@ public class ApplicationPackageManager extends PackageManager {
             if (Arrays.asList(featuresP23).contains(name)) return false;
             if (Arrays.asList(featuresNexus).contains(name)) return true;
         }
+        if (Arrays.asList(featuresAndroid).contains(name)) return true;
         if (Arrays.asList(featuresPixel).contains(name)) return true;
         if (Arrays.asList(featuresPixelOthers).contains(name)) return true;
         return mHasSystemFeatureCache.query(new HasSystemFeatureQuery(name, version));
