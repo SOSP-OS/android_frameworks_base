@@ -7230,9 +7230,13 @@ public final class ViewRootImpl implements ViewParent,
                 // If handwriting is started, toolkit doesn't receive ACTION_UP.
                 mLastClickToolType = event.getToolType(event.getActionIndex());
             }
-
+            
             if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
                 notifyLeaveTypingEvent();
+            }
+
+            if (event.getPointerCount() == 3 && isSwipeToScreenshotGestureActive()) {
+                event.setAction(MotionEvent.ACTION_CANCEL);
             }
 
             mAttachInfo.mUnbufferedDispatchRequested = false;
@@ -11775,6 +11779,14 @@ public final class ViewRootImpl implements ViewParent,
         mChildBoundingInsetsChanged = true;
         scheduleTraversals();
     }
+    
+    private boolean isSwipeToScreenshotGestureActive() {
+        try {
+            return ActivityManager.getService().isSwipeToScreenshotGestureActive();
+        } catch (RemoteException e) {
+            return false;
+        }
+        }
 
     @Override
     public void addTrustedPresentationCallback(@NonNull SurfaceControl.Transaction t,
