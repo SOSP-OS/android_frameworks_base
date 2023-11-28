@@ -4,7 +4,10 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources>
- 
+  
+    <!-- Status bar Double Tap 2 Sleep gesture -->
+    <java-symbol type="bool" name="config_dt2sGestureEnabledByDefault" />
+
     <!-- Whether to cancel fingerprint operation if not idle -->
     <java-symbol type="bool" name="config_fpCancelIfNotIdle" />
 </resources>
