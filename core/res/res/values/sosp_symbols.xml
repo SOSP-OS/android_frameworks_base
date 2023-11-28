@@ -20,6 +20,9 @@
     <java-symbol type="string" name="reboot_to_bootloader_message" />
     <java-symbol type="string" name="reboot_title" />
     <java-symbol type="string" name="reboot_message" />
+    
+    <!-- Status bar Double Tap 2 Sleep gesture -->
+    <java-symbol type="bool" name="config_dt2sGestureEnabledByDefault" />
 
     <!-- Global Actions pref list -->
     <java-symbol type="array" name="custom_config_globalActionsList" />
