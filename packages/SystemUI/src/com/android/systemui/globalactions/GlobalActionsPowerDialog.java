@@ -30,7 +30,7 @@ import android.widget.LinearLayout;
 
 import com.android.systemui.MultiListLayout;
 import com.android.systemui.MultiListLayout.MultiListAdapter;
-import com.android.systemui.R;
+import com.android.systemui.res.R;
 
 /**
  * Creates a customized Dialog for displaying the Shut Down and Restart actions.
